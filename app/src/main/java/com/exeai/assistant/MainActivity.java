@@ -485,5 +485,5 @@ public class MainActivity extends AppCompatActivity {
                 while ((line = reader.readLine()) != null) {
                     if (line.trim().isEmpty() || line.startsWith("#")) continue;
                     String[] parts = line.split("\\t", 3);
-                    if (parts.length < 2) {
+                    if (parts.length < 2) {}
            
