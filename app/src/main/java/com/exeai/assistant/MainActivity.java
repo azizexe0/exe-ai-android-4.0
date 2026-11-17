@@ -485,5 +485,69 @@ public class MainActivity extends AppCompatActivity {
                 while ((line = reader.readLine()) != null) {
                     if (line.trim().isEmpty() || line.startsWith("#")) continue;
                     String[] parts = line.split("\\t", 3);
-                    if (parts.length < 2) {}
-           
+                                    if (parts.length < 2) {
+                    skipped++;
+                    continue;
+                }
+                String question = parts[0].trim();
+                String answerText = parts[1].trim();
+                if (question.isEmpty() || answerText.isEmpty()) {
+                    skipped++;
+                    continue;
+                }
+                db.insertKnowledge(writable, question, answerText);
+                imported++;
+            }
+            writable.setTransactionSuccessful();
+            final int finalImported = imported;
+            final int finalSkipped = skipped;
+            mainHandler.post(() -> addMessage("Bilgi paketi yüklendi. Eklenen: " + finalImported + ", Atlanan: " + finalSkipped, false));
+        } catch (Exception e) {
+            mainHandler.post(() -> addMessage("Dosya okuma hatası: " + e.getMessage(), false));
+        } finally {
+            try {
+                writable.endTransaction();
+            } catch (Exception ignored) {
+            }
+        }
+    });
+}
+
+private static class DB extends SQLiteOpenHelper {
+    DB(Context context) {
+        super(context, "exe_ai.db", null, 1);
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL("CREATE TABLE IF NOT EXISTS knowledge (id INTEGER PRIMARY KEY AUTOINCREMENT, question TEXT, answer TEXT)");
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS knowledge");
+        onCreate(db);
+    }
+
+    void insertKnowledge(SQLiteDatabase db, String question, String answer) {
+        ContentValues cv = new ContentValues();
+        cv.put("question", question);
+        cv.put("answer", answer);
+        db.insert("knowledge", null, cv);
+    }
+
+    String findAnswer(String query) {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT answer FROM knowledge WHERE question LIKE ? LIMIT 1", new String[]{"%" + query + "%"});
+        try {
+            if (c.moveToFirst()) {
+                return c.getString(0);
+            }
+            return null;
+        } finally {
+            c.close();
+        }
+    }
+}
+            }
+                    
