@@ -1,0 +1,37 @@
+EXE AI 4.0 - Özellik özeti
+
+KOMUTLAR
+*** konu  -> ücretsiz Wikipedia araması + kalıcı kaydetme
+### konu  -> ücretsiz Wikipedia araması + kalıcı kaydetme
+***konu ve ###konu biçimleri de desteklenir.
+
+SOHBET
+- Yazılı sohbet
+- Android konuşma tanıma ile sesli giriş
+- Android TTS ile sesli yanıt
+- Sesli yanıtı aç/kapat
+- Yüklü TTS sesleri arasından seçim
+- Konuşma hızı ve tonu
+
+KAMERA
+- Kamera uygulamasından fotoğraf alma
+- Galeriden görsel seçme
+- ML Kit OCR ile yazı okuma
+
+HAFIZA
+- SQLite kalıcı kayıt
+- Öğrenilen bilgileri saklama
+- Soru-cevap TSV içe aktarma
+- Otomatik hafıza temizliği yok
+
+DİĞER
+- YouTube / Minecraft / Chrome açma
+- Wi-Fi / Bluetooth / Android ayarları
+- GitHub Actions APK derlemesi
+
+SINIRLAR
+- ZIP içinde 2 milyon gerçek soru-cevap yok; içe aktarma altyapısı var.
+- Tam yerel büyük dil modeli yok.
+- Kamera canlı video anlayışı / nesne tanıma modeli yok.
+- WhatsApp otomatik gönderimi ve GitHub OAuth yok.
+- Ses tanıma Android servisinin dil paketi ve internet durumuna bağlı.
